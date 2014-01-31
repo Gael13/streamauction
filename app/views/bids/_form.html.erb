@@ -1,0 +1,6 @@
+<li>
+  <%= form_for Bid.new, remote: true do |f| %>
+  <%= f.text_field :amount, placeholder: "Amount" %>
+  <%= f.submit "Send" %>
+  <% end %>
+</li>

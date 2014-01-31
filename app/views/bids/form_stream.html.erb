@@ -1,0 +1,130 @@
+
+1)
+
+<%= form_for auction_products_path, method: :put do %>
+<table>
+  <tr>
+  	<th>Product name</th>
+  	<th>Name</th>
+  	<th>Content</th>
+  	<th>Add a name</th>
+  	<th>Add a content</th>
+  </tr>
+  <% @products.each do |product| %>
+    <tr>
+      <td><%= product.name %></td>
+      <td><%= product.message.name %></td>
+      <td><%= product.message.content %></td>
+      <%= f.fields_for Message.new, remote: true do |f| %>
+      <td><%= f.text_field :name, placeholder: "Name" %></td>
+      <td><%= f.text_field :content %></td>
+      <% end %>
+      <% end %>
+      <%= f.submit "Send" %>
+    </tr>
+  </table>
+<% end %>      	
+
+
+2)
+
+<%= form_for ([@product, :messages]) do |f| %>
+<table>
+  <tr>
+  	<th>Product name</th>
+  	<th>Name</th>
+  	<th>Content</th>
+  	<th>Add a name</th>
+  	<th>Add a content</th>
+  </tr>
+  <% @products.each do |product| %>
+    <tr>
+      <td><%= product.name %></td>
+      <td><%= @product.message.name %></td>
+      <td><%= @product.message.content %></td>
+      <%= fields_for Message.new do |r| %>
+      <td><%= f.text_field :name, placeholder: "Name" %></td>
+      <td><%= f.text_field :content %></td>
+      <% end %>
+      <% end %>
+      <%= f.submit "Send" %>
+    </tr>
+  </table>
+<% end %> 
+
+
+def new
+  @products = Product.all
+  @messages = Array.new(:id) { @product.messages.build }
+end
+
+
+
+3)
+
+
+
+<table>
+  <tr>
+  	<th>Product name</th>
+  	<th>Name</th>
+  	<th>Content</th>
+  	<th>Add a name</th>
+  	<th>Add a content</th>
+  </tr>
+  <% @products.each do |product| %>
+    <tr>
+      <td>
+      	<%= form_for messages_path do |f| %>
+      	<%= product.name %>
+      </td>
+      <td>
+      	<%= @product.message.name %>
+      </td>
+      <td>
+      	<%= @product.message.content %>
+      </td>
+      <%= fields_for Message.new do |r| %>
+      <td>
+      	<%= f.text_field :name, placeholder: "Name" %>
+      </td>
+      <td>
+      	<%= f.text_field :content %>
+      </td>
+      <% end %>
+      <% end %>
+      <%= f.submit "Send" %>
+      <% end %> 
+    </tr>
+  </table>
+
+
+<table class="table table-striped table-bordered">
+  <tr>
+    <th>Product name</th>
+    <th>Current Bid</th>
+    <th>Make your Bid</th>
+  </tr>
+  <% @products.each do |product| %>
+  <tr>
+    <td><%= product.name %></td>
+    <td><%= render @bids %></td>
+    <td><%= render 'bids/form' %></td>
+  </tr>    
+
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
